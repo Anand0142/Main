@@ -2,8 +2,8 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
-    "types": ["@react-three/fiber"]
+    "types": ["@react-three/fiber"],
+    "strict": true
   },
-  "extends": "astro/tsconfigs/strict",
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.astro"]
 }
