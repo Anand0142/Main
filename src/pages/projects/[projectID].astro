@@ -1,52 +1,39 @@
 ---
-export function getStaticPaths() {
-    return [
-        { params: { projectID: "arms-v3" } },
-        { params: { projectID: "vortexa" } },
-        { params: { projectID: "next-mart" } },
-        { params: { projectID: "arms-v2" } },
-        { params: { projectID: "xrecon" } },
-        { params: { projectID: "yoatube" } },
-        { params: { projectID: "srinivas-exam-manager" } },
-        { params: { projectID: "piktures" } },
-        { params: { projectID: "days-beyond" } },
-        { params: { projectID: "arms-v1" } },
-        { params: { projectID: "film-stack" } },
-        { params: { projectID: "covidtrax" } },
-        { params: { projectID: "climate" } },
-        { params: { projectID: "handwritten-digit-recognition" } },
-        { params: { projectID: "hostel-management-system" } },
-        { params: { projectID: "automated-job-application-&-resume-customization" } },
-        { params: { projectID: "slumcare-chatbot" } },
-    ];
-}
-const { projectID } = Astro.params;
-
+import { ProjectsList } from "../../utils/ProjectsList";
 import { Image } from "astro:assets";
 import { ProjectLayout } from "../../layouts";
 import { CheckIcon, ClipboardCopyIcon, ExternalLinkIcon } from "lucide-preact";
 import { CenterTitle, SectionTitle } from "../../components/UI";
 
-// Lazy loading ProjectInfo
-const ProjectInfo = import("../../utils/ProjectsList");
-const { ProjectsList } = await ProjectInfo;
-const [project] = ProjectsList.filter(
-    (itm) => itm.Name.replaceAll(" ", "-").toLowerCase() === projectID,
-);
+export function getStaticPaths() {
+  return ProjectsList
+    .filter(project => !project.hideProject)
+    .map(project => ({
+      params: { projectID: project.slug },
+    }));
+}
+
+const { projectID } = Astro.params;
+const project = ProjectsList.find(itm => itm.slug === projectID);
 ---
 
-<ProjectLayout
-    title=`${project.Name} | ChiragChrg`
+{!project ? (
+  <div class="text-center text-red-500 font-bold">Project not found</div>
+) : (
+  <ProjectLayout
+    title={`${project.Name} | ChiragChrg`}
     description={project.ShortDesc}
->
+  >
     <div class="Fade_In flex_center absolute inset-0 w-full h-full z-[-1]">
+      {project.Mockup && (
         <Image
-            src={project.Shot}
-            alt={`${project.Name}_BG_Image`}
-            class="w-full h-full opacity-50 blur-md p-6 object-cover"
-            loading="eager"
+          src={project.Mockup}
+          alt={`${project.Name}_BG_Image`}
+          class="w-full h-full opacity-50 blur-md p-6 object-cover"
+          loading="eager"
         />
-        <div class="bg-imgOverlayGradient w-full h-full absolute inset-0"></div>
+      )}
+      <div class="bg-imgOverlayGradient w-full h-full absolute inset-0"></div>
     </div>
 
     <div class="flex_center flex-col gap-4 py-4">
@@ -81,43 +68,49 @@ const [project] = ProjectsList.filter(
         </div>
 
         <div class="flex_center gap-4 text-[1em]">
-            <a
-                href={project.Source}
-                target="_blank"
-                rel="author"
-                class="Fade_Stagger flex_center gap-2 bg-LinkBtnGradient px-4 py-2 rounded"
-            >
-                <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 16 16"
-                    color="#fff"
-                    height="24"
-                    width="24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    style="color: var(--heroSocialColor);"
-                >
-                    <path
-                        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
-                    >
-                    </path>
-                </svg>
-                <span>Source Code</span>
-            </a>
-            {
-                project.Link && (
+            {project ? (
+                <>
                     <a
-                        href={project.Link}
+                        href={project.Source}
                         target="_blank"
-                        rel="noreferrer"
+                        rel="author"
                         class="Fade_Stagger flex_center gap-2 bg-LinkBtnGradient px-4 py-2 rounded"
                     >
-                        <ExternalLinkIcon />
-                        <span>Live Demo</span>
+                        <svg
+                            stroke="currentColor"
+                            fill="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 16 16"
+                            color="#fff"
+                            height="24"
+                            width="24"
+                            xmlns="http://www.w3.org/2000/svg"
+                            style="color: var(--heroSocialColor);"
+                        >
+                            <path
+                                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+                            >
+                            </path>
+                        </svg>
+                        <span>Source Code</span>
                     </a>
-                )
-            }
+                    {
+                        project.Link && (
+                            <a
+                                href={project.Link}
+                                target="_blank"
+                                rel="noreferrer"
+                                class="Fade_Stagger flex_center gap-2 bg-LinkBtnGradient px-4 py-2 rounded"
+                            >
+                                <ExternalLinkIcon />
+                                <span>Live Demo</span>
+                            </a>
+                        )
+                    }
+                </>
+            ) : (
+                <div>Project not found</div>
+            )}
         </div>
     </div>
 
@@ -223,6 +216,7 @@ const [project] = ProjectsList.filter(
         }
     </div>
 </ProjectLayout>
+)}
 
 <script is:inline type="module">
     const emailCopyBtn = document.getElementById("emailCopyBtn");

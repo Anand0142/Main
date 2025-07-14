@@ -6,7 +6,11 @@ type StatusType = {
     message: string
 }
 
-const ContactForm = () => {
+interface ContactFormProps {
+    className?: string;
+}
+
+const ContactForm = ({ className = "" }: ContactFormProps) => {
     const [mailStatus, setMailStatus] = useState<StatusType>({ status: false, message: "" })
     const [isLoading, setisLoading] = useState<boolean>(false)
 
@@ -17,13 +21,11 @@ const ContactForm = () => {
     const HandleFormSubmit = async (e: SubmitEvent) => {
         e.preventDefault();
 
-        console.log("EmailJS Public Key:", import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY);
-
         if (!NameRef.current || !EmailRef.current || !MessageRef.current) return
 
-        const name = NameRef?.current?.value as string;
-        const email = EmailRef?.current?.value as string;
-        const message = MessageRef?.current?.value as string;
+        const name = NameRef.current.value
+        const email = EmailRef.current.value
+        const message = MessageRef.current.value
 
         const templateParams = {
             from_name: name,
@@ -32,23 +34,19 @@ const ContactForm = () => {
         }
 
         try {
-
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-            if (!emailRegex.test(email)) {
-                throw new Error('🙄 Invalid Email ID!')
-            }
+            if (!emailRegex.test(email)) throw new Error('🙄 Invalid Email ID!')
 
             setisLoading(true)
+
             const mailRes = await emailjs.send(
-                "service_qwxcg45", // Your Service ID
-                "template_kwahd7y", // Your Template ID
+                "service_qwxcg45",
+                "template_kwahd7y",
                 templateParams,
-                "K2GKR9x5VmEshYwLJ" // <--- REPLACE THIS WITH YOUR ACTUAL PUBLIC KEY
+                "K2GKR9x5VmEshYwLJ"
             );
 
-            if (mailRes.status !== 200) {
-                throw new Error("😵 Message not Sent")
-            }
+            if (mailRes.status !== 200) throw new Error("😵 Message not Sent")
 
             setMailStatus({ status: true, message: "👍 Message Sent!" })
             setisLoading(false)
@@ -66,11 +64,11 @@ const ContactForm = () => {
     }
 
     return (
-        <form onSubmit={HandleFormSubmit} className="Fade_Up bg-LinkBtnGradient rounded-md w-full lg:max-w-[650px] px-4 py-2 outline outline-1 outline-white/20 flex_center flex-col">
-            <label
-                htmlFor="name"
-                className="noCustomCursor w-full h-fit flex justify-center items-start flex-col px-1 py-2"
-            >
+        <form
+            onSubmit={HandleFormSubmit}
+            className={`Fade_Up bg-LinkBtnGradient rounded-md w-full lg:max-w-[650px] px-4 py-2 outline outline-1 outline-white/20 flex_center flex-col ${className}`}
+        >
+            <label htmlFor="name" className="noCustomCursor w-full flex flex-col px-1 py-2">
                 Name
                 <input
                     type="text"
@@ -82,10 +80,7 @@ const ContactForm = () => {
                     required
                     ref={NameRef} />
             </label>
-            <label
-                htmlFor="email"
-                className="noCustomCursor w-full h-fit flex justify-center items-start flex-col px-1 py-2"
-            >
+            <label htmlFor="email" className="noCustomCursor w-full flex flex-col px-1 py-2">
                 Email
                 <input
                     type="email"
@@ -97,10 +92,7 @@ const ContactForm = () => {
                     required
                     ref={EmailRef} />
             </label>
-            <label
-                htmlFor="message"
-                className="noCustomCursor w-full h-fit flex justify-center items-start flex-col px-1 py-2"
-            >
+            <label htmlFor="message" className="noCustomCursor w-full flex flex-col px-1 py-2">
                 Message
                 <textarea
                     rows={5}
@@ -117,19 +109,17 @@ const ContactForm = () => {
                     type="submit"
                     disabled={isLoading}
                 >
-                    {
-                        isLoading ? (
-                            <>
-                                <span>Sending</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="lucide lucide-loader-2 animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
-                            </>
-                        ) : (
-                            <>
-                                <span>Submit</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-horizontal"><path d="m3 3 3 9-3 9 19-9Z" /><path d="M6 12h16" /></svg>
-                            </>
-                        )
-                    }
+                    {isLoading ? (
+                        <>
+                            <span>Sending</span>
+                            <svg className="lucide lucide-loader-2 animate-spin"  />
+                        </>
+                    ) : (
+                        <>
+                            <span>Submit</span>
+                            <svg className="lucide lucide-send-horizontal" />
+                        </>
+                    )}
                 </button>
                 <span>{mailStatus.message}</span>
             </div>

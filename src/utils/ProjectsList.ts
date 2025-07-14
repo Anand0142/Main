@@ -15,66 +15,42 @@ import {
 } from "../assets/Mockup"
 
 
-type ProjectsListType = {
-    Name: string,
-    ShortDesc: string,
-    Desc: string,
-    Logo: ImageMetadata,
-    Shot: ImageMetadata,
-    Mockup: ImageMetadata,
-    Theme: string,
-    Status: string,
-    Link?: string,
-    Source: string,
-    Demo?: {
-        email: string,
-        password: string
-    },
-    Tech: {
-        title: string,
-        description: string,
-        icon: ImageMetadata
-    }[],
-    features: {
-        title: string,
-        description: string
-    }[],
-    hideProject: boolean,
-    LogoSize: number,
-    versions: {
-        title: string,
-        version: string
-    }[]
-}[]
-
-// -- PROJECTS TEMPLATE --
-// {
-//     Name: "TITLE",
-//     ShortDesc: "SHORT_DESCRIPTION",
-//     Desc: "DESCRIPTION",
-//     Logo: LOGO_URL,
-//     Shot: SCREENSHOT_URL,
-//     Mockup: MOCKUP_URL,
-//     Theme: "PROJECT_THEME_COLOR_HEX",
-//     Status: "completed OR development",
-//     Link: "PROJECT_URL",
-//     Source: "GITHUB_URL",
-//     Demo?: { 
-//         email: "DEMO_EMAIL", 
-//         password: "DEMO_PASSWORD" 
-//     },
-//     Tech: [TECH_ICONS_URL],
-//     features: [{
-//         title: "FEATURE_TITLE",
-//         description: "FEATURE_DESCRIPTION"
-//     }],
-//     hideProject: false,
-//     LogoSize: 50,
-//     versions: [{ 
-//         title: "PREV_PROJECT_TITLE", 
-//         version: "VERSION_NO" 
-//     }]
-// },
+type ProjectTech = {
+    title: string;
+    description: string;
+    icon: ImageMetadata;
+  };
+  
+  type ProjectFeature = {
+    title: string;
+    description: string;
+  };
+  
+  type ProjectsListType = {
+    Name: string;
+    ShortDesc: string;
+    Desc: string;
+    Logo: ImageMetadata;
+    Shot: ImageMetadata;
+    Mockup: ImageMetadata;
+    Theme: string;
+    Status: string;
+    Link?: string;
+    Source: string;
+    Demo?: { email: string; password: string };
+    Tech: ProjectTech[];
+    features: ProjectFeature[];
+    hideProject: boolean;
+    LogoSize: number;
+    versions: { title: string; version: string }[];
+    tags: string[];
+    year: number;
+    slug: string;
+  }[];
+  
+  // --- COMMON VERSION SETS ---
+  import { ARMSVersions, CommonFeatures } from "./constants";
+     
 
 const TechInfo = {
     HTML: {
@@ -200,6 +176,7 @@ const TechInfo = {
     TensorFlow: {
         title: "TensorFlow",
         description: "An open-source machine learning framework for building and training neural networks.",
+        icon: PythonIcon // Placeholder
     },
     NLP: {
         title: "Natural Language Processing",
@@ -209,22 +186,27 @@ const TechInfo = {
     NumPy: {
         title: "NumPy",
         description: "A fundamental package for numerical computing with Python, providing support for large, multi-dimensional arrays and matrices.",
+        icon: PythonIcon // Placeholder
     },
     CNN: {
         title: "Convolutional Neural Networks",
         description: "A class of deep neural networks, most commonly applied to analyzing visual imagery.",
+        icon: PythonIcon // Placeholder
     },
     Keras: {
         title: "Keras",
         description: "A high-level neural networks API, written in Python and capable of running on top of TensorFlow, CNTK, or Theano.",
+        icon: PythonIcon // Placeholder
     },
     Pillow: {
         title: "Pillow",
         description: "The friendly PIL fork, a Python Imaging Library that adds image processing capabilities to your Python interpreter.",
+        icon: PythonIcon // Placeholder
     },
     Tkinter: {
         title: "Tkinter",
         description: "Python's standard GUI (Graphical User Interface) toolkit.",
+        icon: PythonIcon // Placeholder
     },
     Python: {
         title: "Python",
@@ -253,7 +235,7 @@ const FeatureList = {
 export const ProjectsList: ProjectsListType = [
     {
         Name: "HandWritten Digit Recognition",
-        ShortDesc: "A model to identify and classify handwritten digits with high accuracy using Convalutional Neural Networks.",
+        ShortDesc: "A model to identify and classify handwritten digits with high accuracy using Convolutional Neural Networks.",
         Desc: "This project uses a deep learning approach to recognize handwritten digits (0–9) from images. Built using Python and trained on the MNIST dataset, the system implements a Convolutional Neural Network (CNN) for accurate classification. It serves as a foundational example of computer vision in AI and is useful in OCR and document analysis tasks.",
         Logo: ArmsLogo,
         Shot: Armsv3Shots,
@@ -263,8 +245,7 @@ export const ProjectsList: ProjectsListType = [
         Source: "https://github.com/GirigallaPrathyusha/Handwritten-Digit-Recognition",
         Tech: [TechInfo.Python, TechInfo.JupyterNotebook],
         features: [
-            FeatureList.Responsive,
-            FeatureList.SEO,
+            ...CommonFeatures,
             {
               title: "CNN Model",
               description: "Implements Convolutional Neural Network for digit recognition with high accuracy."
@@ -284,11 +265,10 @@ export const ProjectsList: ProjectsListType = [
         ],
         hideProject: false,
         LogoSize: 50,
-        versions: [
-            { title: "ARMS v3", version: "3" },
-            { title: "ARMS v2", version: "2" },
-            { title: "ARMS v1", version: "1" },
-        ]
+        versions: ARMSVersions,
+        tags: ["AI", "Python", "CNN", "MNIST"],
+        year: 2024,
+        slug: "handwritten-digit-recognition"
     },
     {
         Name: "Automated Job Application & Resume Customization",
@@ -336,7 +316,10 @@ export const ProjectsList: ProjectsListType = [
             { title: "ARMS v3", version: "3" },
             { title: "ARMS v2", version: "2" },
             { title: "ARMS v1", version: "1" },
-        ]
+        ],
+        tags: ["AI", "Python", "NLP", "Web Scraping"],
+        year: 2024,
+        slug: "automated-job-application-resume-customization"
     },
     {
         Name: "Slumcare ChatBot",
@@ -372,7 +355,10 @@ export const ProjectsList: ProjectsListType = [
         ],
         hideProject: false,
         LogoSize: 40,
-        versions: []
+        versions: [],
+        tags: ["AI", "Python", "Flask", "Supabase"],
+        year: 2024,
+        slug: "slumcare-chatbot"
     },
     {
         Name: "XRecon",
@@ -409,7 +395,10 @@ export const ProjectsList: ProjectsListType = [
         ],
         hideProject: true,
         LogoSize: 55,
-        versions: []
+        versions: [],
+        tags: ["React", "Node.js", "MongoDB", "Socket.io"],
+        year: 2024,
+        slug: "xrecon"
     },
     {
         Name: "YoaTube",
@@ -437,7 +426,10 @@ export const ProjectsList: ProjectsListType = [
         ],
         hideProject: true,
         LogoSize: 55,
-        versions: []
+        versions: [],
+        tags: ["React", "Node.js", "MongoDB", "Socket.io"],
+        year: 2024,
+        slug: "yoatube"
     },
     {
         Name: "Online Bus Ticket Booking",
@@ -486,7 +478,10 @@ export const ProjectsList: ProjectsListType = [
         ],
         hideProject: false,
         LogoSize: 55,
-        versions: []
+        versions: [],
+        tags: ["PHP", "MySQL", "JavaScript", "HTML", "CSS"],
+        year: 2024,
+        slug: "online-bus-ticket-booking"
     },
     {
         Name: "Hostel Management System",
@@ -521,6 +516,9 @@ export const ProjectsList: ProjectsListType = [
         ],
         hideProject: false,
         LogoSize: 50,
-        versions: []
+        versions: [],
+        tags: ["PHP", "MySQL", "JavaScript", "HTML", "CSS"],
+        year: 2024,
+        slug: "hostel-management-system"
     }
 ]
