@@ -1,0 +1,39 @@
+---
+import { CenterTitle, SkillTitle, SkillGrid } from "./UI";
+import {
+    WebDevelopmentStack,
+    ProgrammingStack,
+    ToolsStack,
+} from "../utils/SkillStack";
+---
+
+<section id="skills" class="w-full px-6 py-20 bg-background">
+    <CenterTitle title="Tech Stack" color="primary" />
+
+    <div
+        class="Slide_From_Left flex justify-center items-start flex-col lg:flex-row gap-2"
+    >
+        <div
+            class="Slide_From_Left flex_center flex-col gap-4 py-4 xs:p-4 w-full h-full"
+        >
+            <SkillTitle title="Web Development" color="primary" />
+            <SkillGrid stack={WebDevelopmentStack} />
+        </div>
+    </div>
+
+    <div class="Slide_From_Right flex justify-center items-start flex-col lg:flex-row gap-2">
+        <div
+            class="Slide_From_Right flex_center flex-col gap-4 py-4 xs:p-4 w-full h-full"
+        >
+            <SkillTitle title="Programming" color="primary" />
+            <SkillGrid stack={ProgrammingStack} />
+        </div>
+
+        <div
+            class="Slide_From_Right flex_center flex-col gap-4 py-4 xs:p-4 w-full h-full"
+        >
+            <SkillTitle title="Tech & Tools" color="primary" />
+            <SkillGrid stack={ToolsStack} />
+        </div>
+    </div>
+</section>

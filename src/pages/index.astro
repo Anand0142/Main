@@ -1,0 +1,39 @@
+---
+import { Layout } from "../layouts";
+import { Hero, About, Skills, Projects, Contact, Certifications, StatsSection, Experience } from "../components";
+import { ProjectsList } from "../utils/ProjectsList";
+import { CertificationsList } from "../utils/CertificationsList";
+import { WebDevelopmentStack, ProgrammingStack, ToolsStack } from "../utils/SkillStack";
+
+const totalProjects = ProjectsList.filter(project => !project.hideProject).length;
+const totalCertifications = CertificationsList.length;
+const totalTechStacks = WebDevelopmentStack.length + ProgrammingStack.length + ToolsStack.length;
+const totalExperience = 1; // Since there's only one experience entry
+---
+
+<Layout>
+	<Hero />
+	<StatsSection totalProjects={totalProjects} totalCertifications={totalCertifications} totalTechStacks={totalTechStacks} totalExperience={totalExperience} client:load />
+	<About />
+	<Certifications />
+	<Skills />
+	<Projects />
+	<Experience />
+	<Contact />
+</Layout>
+
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        const certificationsSection = document.getElementById('certifications');
+        
+        if (certificationsSection) {
+            certificationsSection.style.display = 'none'; // Initially hide the section
+        }
+
+        document.addEventListener('toggleCertifications', () => {
+            if (certificationsSection) {
+                certificationsSection.style.display = 'block'; // Always show when event is dispatched
+            }
+        });
+    });
+</script>

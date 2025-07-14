@@ -1,0 +1,58 @@
+---
+interface Props {
+    totalProjects: number;
+    totalCertifications: number;
+    totalTechStacks: number;
+}
+
+const { totalProjects, totalCertifications, totalTechStacks } = Astro.props;
+---
+
+<section class="w-full py-20 bg-background">
+    <div class="flex_center flex-col lg:flex-row gap-8 px-6">
+        <div class="Fade_Up flex flex-col items-center justify-start p-6 border border-primary rounded-md shadow-lg bg-card-bg w-full md:w-1/2 lg:w-1/3 xl:w-1/4 min-h-[200px] stats-card-projects">
+            <div class="p-4 rounded-full bg-primary-dark mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code text-text-light"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <h3 class="text-4xl font-bold text-center text-text-light mb-2">{totalProjects}</h3>
+            <p class="text-lg font-semibold text-center text-text-light">TOTAL PROJECTS</p>
+            <p class="text-xs text-center text-text-light-2 mt-1">Innovative web & mobile solutions crafted</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right self-end mt-auto text-text-light"><path d="M7 7h10v10"/><path d="M7 17L17 7"/></svg>
+        </div>
+
+        <div class="Fade_Up flex flex-col items-center justify-start p-6 border border-primary rounded-md shadow-lg bg-card-bg w-full md:w-1/2 lg:w-1/3 xl:w-1/4 min-h-[200px] stats-card-certificates">
+            <div class="p-4 rounded-full bg-primary-dark mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-award text-text-light"><circle cx="12" cy="8" r="7"/><path d="M12 15v9"/><path d="M12 15l-3.35 1.68"/><path d="M12 15l3.35 1.68"/></svg>
+            </div>
+            <h3 class="text-4xl font-bold text-center text-text-light mb-2">{totalCertifications}</h3>
+            <p class="text-lg font-semibold text-center text-text-light">CERTIFICATES</p>
+            <p class="text-xs text-center text-text-light-2 mt-1">Professional skills validated</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right self-end mt-auto text-text-light"><path d="M7 7h10v10"/><path d="M7 17L17 7"/></svg>
+        </div>
+
+        <div class="Fade_Up flex flex-col items-center justify-start p-6 border border-primary rounded-md shadow-lg bg-card-bg w-full md:w-1/2 lg:w-1/3 xl:w-1/4 min-h-[200px] stats-card-experience">
+            <div class="p-4 rounded-full bg-primary-dark mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe text-text-light"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20A14.5 14.5 0 0 0 12 2"/><path d="M2 12h20"/></svg>
+            </div>
+            <h3 class="text-4xl font-bold text-center text-text-light mb-2">1</h3>
+            <p class="text-lg font-semibold text-center text-text-light">EXPERIENCE</p>
+            <p class="text-xs text-center text-text-light-2 mt-1">Continuous learning journey</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucude-arrow-up-right self-end mt-auto text-text-light"><path d="M7 7h10v10"/><path d="M7 17L17 7"/></svg>
+        </div>
+    </div>
+
+    <script is:inline>
+        document.querySelector('.stats-card-projects').addEventListener('click', () => {
+            document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        document.querySelector('.stats-card-certificates').addEventListener('click', () => {
+            document.dispatchEvent(new Event('toggleCertifications'));
+            document.getElementById('certifications').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        document.querySelector('.stats-card-experience').addEventListener('click', () => {
+            document.getElementById('experience').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</section> 

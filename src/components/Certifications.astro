@@ -1,0 +1,34 @@
+---
+import { SectionTitle } from "./UI";
+import { CertificationsList } from "../utils/CertificationsList";
+import { Image } from "astro:assets";
+---
+
+<section id="certifications" class="w-full px-6 py-20 bg-background">
+    <SectionTitle
+        title="Certifications"
+        color="primary"
+        className="flex flex-col justify-center"
+    >
+        <div class="w-full h-full py-10 gap-8 flex_center flex-wrap">
+            {CertificationsList.map((certification) => (
+                <div class="Slide_From_Left flex flex-col items-center justify-center p-4 border border-primary rounded-md shadow-lg bg-card-bg w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
+                    <Image
+                        src={certification.image}
+                        alt={certification.title}
+                        width={300}
+                        height={200}
+                        loading="lazy"
+                        class="rounded-md mb-4"
+                    />
+                    <h3 class="text-xl font-bold text-center mb-2">
+                        {certification.title}
+                    </h3>
+                    <p class="text-sm text-center text-text-light">
+                        {certification.description}
+                    </p>
+                </div>
+            ))}
+        </div>
+    </SectionTitle>
+</section> 

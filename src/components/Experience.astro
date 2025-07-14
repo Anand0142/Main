@@ -1,0 +1,66 @@
+<section id="experience" class="w-full px-6 py-20 bg-background">
+    <div class="container mx-auto flex flex-col items-center">
+        <div class="flex_center gap-4 w-full mb-10">
+            <span class="h-[2px] w-[50%] bg-primary"></span>
+            <h2 class="gradientText font-bold text-4xl text-center flex_center gap-4 whitespace-nowrap">
+                <span class="text-primary text-[1.4em]">&lt;</span>
+                Experience
+                <span class="text-primary text-[1.4em]">/&gt;</span>
+            </h2>
+            <span class="h-[2px] w-[50%] bg-primary"></span>
+        </div>
+
+        <div class="Slide_From_Right w-full max-w-3xl">
+            <div class="bg-card-bg p-8 rounded-md shadow-lg w-full">
+                <h3 class="text-2xl font-semibold text-text-light mb-2">Web Developer Intern</h3>
+                <p class="text-lg text-text-light-2 mb-4">PRODIGY INFOTECH | OCT 2024 – NOV 2024</p>
+                <ul class="list-disc list-inside text-text-light mb-6">
+                    <li>Gained hands-on experience in designing and optimizing interactive web applications, focusing on seamless functionality and performance.</li>
+                    <li>Contributed to the design and implementation of new features.</li>
+                    <li>Collaborated with a team to implement best practices in web development, ensuring efficiency and scalability.</li>
+                </ul>
+                <a href="https://prodigyinfotech.dev/verify?cin=PIT/OCT24/21350" target="_blank" class="mt-6 px-6 py-3 bg-primary text-white font-semibold rounded-md shadow-lg hover:bg-secondary transition duration-300">
+                    View
+                </a>
+                <button class="mt-6 ml-4 px-6 py-3 bg-secondary text-white font-semibold rounded-md shadow-lg hover:bg-primary transition duration-300 open-certificate-modal" data-certificate-src="https://res.cloudinary.com/dlled6nof/image/upload/v1750714574/internship_hnwfks.jpg">
+                    Certificate
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="certificateModal" class="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-[100] hidden">
+    <div class="relative bg-white p-4 rounded-lg max-w-[90vw] max-h-[90vh] overflow-auto">
+        <button id="closeCertificateModalBtn" class="absolute top-2 right-2 text-white text-3xl font-bold">&times;</button>
+        <img id="certificateModalImage" src="" alt="Certificate Image" class="max-w-full max-h-full object-contain">
+    </div>
+</div>
+
+<script is:inline>
+    const certificateModal = document.getElementById('certificateModal');
+    const certificateModalImage = document.getElementById('certificateModalImage');
+    const closeCertificateModalBtn = document.getElementById('closeCertificateModalBtn');
+
+    document.querySelectorAll('.open-certificate-modal').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const imageUrl = event.target.dataset.certificateSrc;
+            if (imageUrl) {
+                certificateModalImage.src = imageUrl;
+                certificateModal.classList.remove('hidden');
+            }
+        });
+    });
+
+    closeCertificateModalBtn.addEventListener('click', () => {
+        certificateModal.classList.add('hidden');
+        certificateModalImage.src = ''; // Clear image on close
+    });
+
+    certificateModal.addEventListener('click', (event) => {
+        if (event.target === certificateModal) {
+            certificateModal.classList.add('hidden');
+            certificateModalImage.src = '';
+        }
+    });
+</script> 

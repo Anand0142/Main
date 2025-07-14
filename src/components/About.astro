@@ -1,0 +1,111 @@
+---
+import { Image } from "astro:assets";
+import Avatar_250 from "../Avatar_250.webp";
+import { SectionTitle } from "./UI";
+---
+
+<section id="about" class="w-full px-6 py-20 bg-background">
+    <SectionTitle
+        title="About Me"
+        color="primary"
+        className="h-screen flex flex-col justify-center"
+    >
+        <div class="flex_center flex-col lg:flex-row w-full h-full py-10 gap-8">
+            <Image
+                src={Avatar_250}
+                alt="About_Avatar"
+                class="Slide_From_Left rounded-full lg:mx-14"
+                width={225}
+                height={225}
+                loading="lazy"
+            />
+
+            <div
+                class="Slide_From_Right w-full md:w-[80%] lg:w-[60%] flex justify-center items-start flex-col gap-4 lg:border-l border-primary py-8 lg:pl-10"
+            >
+                <h2 class="Slide_From_Right text-[1.5em] font-bold">Hey there! 👋🏻</h2>
+                <p class="Slide_From_Right text-justify">
+                    I'm a passionate and forward-looking developer with a growing focus on AI, full-stack development, and intuitive user experiences. 
+                    As a B.Tech Information Technology student, my journey has been fueled by curiosity, creativity, and a strong belief in using technology to make life simpler, smarter, and more meaningful.
+                </p>
+                <p class="Slide_From_Right text-justify">
+                    I've built that tackle real-world problems from AI-based job application automation to full-stack hostel management systems. 
+                    With every project, I aim to improve my skills and learn something new. 
+                    Whether it's web development, Automation, or UI design, I enjoy taking on challenges that push me to grow.
+                    I'm constantly exploring new technologies and always open to collaborating on meaningful tech initiatives. 
+                </p>
+                <p class="Slide_From_Right text-justify">
+                    I'm always ready for the next challenge.
+                    If you're seeking a dedicated and passionate web developer,
+                    I'm eager to collaborate with you. Let's bring your ideas to
+                    life!
+                </p>
+                <button
+                    id="readMoreBtn"
+                    class="Slide_From_Right self-end mt-4 px-6 py-3 bg-primary text-white font-semibold rounded-md shadow-lg hover:bg-secondary transition duration-300"
+                >
+                    Read More
+                </button>
+            </div>
+        </div>
+
+        <div
+            id="popup-modal"
+            class="hidden fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50"
+        >
+            <div class="bg-white p-6 rounded-lg shadow-lg relative w-11/12 md:w-1/2 lg:w-1/3"
+            >
+                <button
+                    id="close-modal"
+                    class="absolute top-2 right-2 text-gray-700 hover:text-gray-900"
+                >
+                    &times;
+                </button>
+                <h3 class="text-xl font-bold mb-4">More About Me</h3>
+                <p class="text-gray-700 text-justify">
+                    I'm a passionate and forward-looking developer with a growing focus on AI, full-stack development, and intuitive user experiences. 
+                    As a B.Tech Information Technology student, my journey has been fueled by curiosity, creativity, and a strong belief in using technology to make life simpler, smarter, and more meaningful.
+                    </p>
+                    <p class="text-gray-700 text-justify mt-2">
+                    I've built projects that tackle real-world problems, from AI-based job application automation to full-stack hostel management systems. 
+                    With every project, I aim to improve my skills and learn something new. 
+                    Whether it's web development, automation, or UI design, I enjoy taking on challenges that push me to grow.
+                    </p>
+                    <p class="text-gray-700 text-justify mt-2">
+                    I'm constantly exploring new technologies and always open to collaborating on meaningful tech initiatives. 
+                    My goal is to create impactful and user-centric solutions that stand out.
+                    </p>
+                    <p class="text-gray-700 text-justify mt-2">
+                    I'm always ready for the next challenge.
+                    If you're seeking a dedicated and passionate web developer,
+                    I'm eager to collaborate with you. Let's bring your ideas to
+                    life!
+                </p>
+            </div>
+        </div>
+    </SectionTitle>
+</section>
+
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        const readMoreBtn = document.getElementById('readMoreBtn');
+        const popupModal = document.getElementById('popup-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+
+        if (readMoreBtn && popupModal && closeModalBtn) {
+            readMoreBtn.addEventListener('click', () => {
+                popupModal.classList.remove('hidden');
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                popupModal.classList.add('hidden');
+            });
+
+            popupModal.addEventListener('click', (event) => {
+                if (event.target === popupModal) {
+                    popupModal.classList.add('hidden');
+                }
+            });
+        }
+    });
+</script>
